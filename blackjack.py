@@ -29,7 +29,7 @@ class Deck:
             for rank in RANKS:
                 card = Card(suit, rank)
                 if card.rank == 'A':
-                    card.value = (1, 11)
+                    card.value = 11
                 elif card.rank in range(2, 11):
                     card.value = rank
                 else:
@@ -61,14 +61,15 @@ class Player:
         # add value of each card together and print total
         hand_total = 0
         for card in self.hand:
-            if card.rank == 'A' and hand_total <= 11:
-                hand_total += 10
-            else:
-                hand_total += 1
             hand_total += card.value
         return hand_total
         
-
+    def has_ace(self):
+        hand_total = self.calculate_hand_value()
+        for card in self.hand:
+            if card.rank == 'A' and hand_total > 21:
+                hand_total -= 10
+        return hand_total
 
 class Dealer(Player):
     def __init__(self):
@@ -104,6 +105,9 @@ class Game:
 
 
 new_game = Game()
+ace_of_spades = Card("♠️", "A", 11)
+new_game.player.hand.append(ace_of_spades)
+# print(new_game.player.calculate_hand_value())
 new_game.player.look_at_hand()
-print(new_game.player.calculate_hand_value())
+print(new_game.player.has_ace())
 # TODO Add values of each hand so player and dealer can decide to hit or stay
