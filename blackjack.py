@@ -63,13 +63,17 @@ class Player:
         for card in self.hand:
             hand_total += card.value
         return hand_total
-        
+
     def has_ace(self):
         hand_total = self.calculate_hand_value()
         for card in self.hand:
             if card.rank == 'A' and hand_total > 21:
                 hand_total -= 10
         return hand_total
+
+    def play_hand(self):
+        
+        
 
 class Dealer(Player):
     def __init__(self):
@@ -105,7 +109,7 @@ class Game:
 
 
 new_game = Game()
-ace_of_spades = Card("♠️", "A", 11)
+# ace_of_spades = Card("♠️", "A", 11)
 new_game.player.hand.append(ace_of_spades)
 # print(new_game.player.calculate_hand_value())
 new_game.player.look_at_hand()
